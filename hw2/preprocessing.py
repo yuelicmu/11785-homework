@@ -20,10 +20,10 @@ def feature_zero_mean(x, xtest):
 
 
 def zca(x, xtest, bias=0.1):
-    sigma = np.dot(x.T, x) / np.shape(x)[0]
+    sigma = np.dot(x.T, x) / np.shape(x)[0] + np.eye(np.shape(x)[1]) * bias
     u, s, _ = np.linalg.svd(sigma)
-    principal_comps = np.dot(np.dot(u, np.diag(1. / np.sqrt(s + bias))), u.T)
-    return np.dot(x, principal_comps), np.dot(xtest, principal_components)
+    principal_comps = np.dot(np.dot(u, np.diag(1. / np.sqrt(s))), u.T)
+    return np.dot(x, principal_comps), np.dot(xtest, principal_comps)
 
 
 def cifar_10_preprocess(x, xtest, image_size=32):
